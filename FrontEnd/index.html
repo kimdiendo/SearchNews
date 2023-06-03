@@ -4,14 +4,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BaoMoi_UIT</title>
-    <link rel="icon" href="https://www.uit.edu.vn/sites/vi/files/images/Logos/Logo_UIT_Web.png" type="image/x-icon" />
+    <title>Báo Mới</title>
+    <link rel="icon" href="assest/img/news_report.png" type="image/x-icon" />
     <link rel="stylesheet" href="./assest/css/styles.css">
     <link rel="stylesheet" href="./assest/fonts/themify-icons-font/themify-icons/themify-icons.css">
 </head>
 <body>
     <div id="main">
-
         <div id="header">
             <!-- Begin nav -->
             <ul id="nav">
@@ -19,26 +18,12 @@
                 <li><a href="#mot">Thể Thao</a></li>
                 <li><a href="#hai">Kinh Tế</a></li>
                 <li><a href="#ba">Chính Trị</a></li>
-                <li>
-                    <a href="">
-                        Xem Thêm
-                        <i class="nav-arrow-down ti-angle-down"></i>
-                    </a>
-                    <ul class="subnav">
-                        <li><a href="#">Văn Hóa - Xã Hội</a></li>
-                        <li><a href="#">Đời Sống</a></li>
-                        <li><a href="#">Công An</a></li>
-                    </ul>
-                </li>
             </ul>
             <!-- End nav -->
             <!-- Begin button -->
             <div class="search-btn">
-                <input type="text" class="search-input" placeholder="Tìm kiếm...">
+                <input type="text" id="searchInput" class="search-input" placeholder="Tìm kiếm...">
                 <i class="search-icon ti-search"></i>
-                
-                
-                
             </div>
             <!-- End button -->
         </div>
@@ -140,17 +125,6 @@
                 </div>
             </div>
 
-            <!-- Contact section -->
-            <!-- <div class="content-section">
-                <h2 class="section-heading">TÌM KIẾM</h2>
-                <p class="section-sub-heading">Fan? Drop a note!
-
-                    Chicago, US
-                    Phone: +00 151515
-                    Email: mail@mail.com
-                </p>
-            </div> -->
-
         </div>
 
         <div id="footer">
@@ -189,6 +163,13 @@
         </div>
     </div>
     <script>
+        const searchInput = document.getElementById('searchInput');
+        const searchButton = document.querySelector('.search-icon');
+        searchButton.addEventListener('click', function() {
+            const searchValue = searchInput.value;
+            console.log(searchValue); 
+            
+        });
         const buyBtns = document.querySelectorAll('.js-buy-stocks')
         const modal = document.querySelector('.js-modal')
         const modalClose = document.querySelector('.js-modal-close')

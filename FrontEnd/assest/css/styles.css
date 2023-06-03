@@ -122,7 +122,7 @@ html {
     position: relative;
     margin-top: 46px;
     padding: 25%;
-    background: url(/assest/img/slider/1.jpg) top center / cover no-repeat;
+    background: url("../img/slider/1.jpg") top center / cover no-repeat;
 }
 
 #slider .text-content        {
@@ -137,11 +137,14 @@ html {
 #slider .text-heading {
     font-weight: 500;
     font-size: 24px;
+    color: #fff;
+    
 }
 
 #slider .text-discription {
     font-size: 15px;
     margin-top: 25px;
+    color: #fff;
 }
 
 #content .content-section {

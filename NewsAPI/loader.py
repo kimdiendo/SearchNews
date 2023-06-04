@@ -4,6 +4,7 @@ import os
 import pandas as pd
 from operator import itemgetter
 import Preprocessor
+import math
 
 def importVectorModel(path_PL,path_vocab):#import posting list và vocab
 
@@ -14,12 +15,14 @@ def importVectorModel(path_PL,path_vocab):#import posting list và vocab
     vocab.set_index("Key", inplace=True)
     return data, vocab
 def weightingQ(query_term):#đặt weight cho query term
-  sum_w=0
-  for term in query_term:
-    sum_w += term[1]
-  for term in query_term:
-    term[1]=term[1]/sum_w
-  return query_term
+    sum_w = 0
+    for term in query_term:
+        sum_w += math.pow(term[1] , 2)
+    sum_w = math.sqrt(sum_w)
+    for term in query_term:
+        term[1]=term[1]/sum_w
+    return query_term
+  
 def find_and_add(arr,doc_id,value):
   for i in range(len(arr)):
     if arr[i][0]== doc_id:

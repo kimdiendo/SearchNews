@@ -78,7 +78,7 @@
                                 <h3 class="places-heading">NLG</h3>
                                 <p class="places-time">Ngày 29/4</p>
                                 <p class="places-desc">Là ngày giao dịch không hưởng quyền nhận cổ tức đợt 2 năm 2022 của CTCP Đầu tư Nam Long (NLG – HOSE), ngày đăng ký cuối cùng là 30/5. Theo đó, cổ tức sẽ được trả bằng tiền mặt theo tỷ lệ 2%, thanh toán bắt đầu từ ngày 30/6/2023.</p>
-                                <button  class="places-buy-btn js-buy-stocks">Buy-Stocks</button>
+                               
                             </div>
                         </div>
                         <div class="places-item">
@@ -87,7 +87,7 @@
                                 <h3 class="places-heading">BMC</h3>
                                 <p class="places-time">Ngày 30/4</p>
                                 <p class="places-desc">Là ngày giao dịch không hưởng quyền nhận cổ tức năm 2022 của CTCP Khoáng sản Bình Định (BMC – HOSE), ngày đăng ký cuối cùng là 31/5. Theo đó, cổ tức sẽ được trả bằng tiền mặt theo tỷ lệ 9%, thanh toán bắt đầu từ ngày 14/6/2023.</p>
-                                <button  class="places-buy-btn js-buy-stocks">Buy-Stocks</button>
+                        
                             </div>
                         </div>
                         <div class="places-item">
@@ -96,7 +96,6 @@
                                 <h3 class="places-heading">CHP</h3>
                                 <p class="places-time">Ngày 07/4</p>
                                 <p class="places-desc">Là ngày giao dịch không hưởng quyền nhận cổ tức còn lại năm 2022 của CTCP Thủy điện miền Trung (CHP – HOSE), ngày đăng ký cuối cùng là 08/6. Theo đó, cổ tức sẽ được trả bằng tiền mặt theo tỷ lệ 18%, thanh toán bắt đầu từ ngày 05/7/2023.</p>
-                                <button  class="places-buy-btn js-buy-stocks">Buy-Stocks</button>
                             </div>
                         </div>
                         
@@ -136,63 +135,84 @@
                     <i class="ti-close"></i>
                 </div>
                 <header class="modal-header">
-                    <i class="modal-icon ti-bag"></i>
-                    Stocks
+                   TOP bài báo liên quan
                 </header>
-                <div class="modal-body">
-                    <label for="stock-quantity" class="modal-label">
-                        <i class="ti-shopping-cart"></i>
-                        Stocks, $15 / one stock
-                    </label>
-                    <input id="stock-quantity" type="" class="modal-input" placeholder="How many?">
-                    <label for="stock-email" class="modal-label">
-                        <i class="ti-user"></i>
-                        Send To
-                    </label>
-                    <input  id="stock-email" type="" class="modal-input" placeholder="Enter email">
-                    
-                    <button class="buy-stocks">
-                        Pay
-                        <i class="ti-check"></i>
-                    </button>
+                <div class =modal_items_news>
+                    <ul id="item-list">
+                    </ul>
                 </div>
-                <footer class="modal-footer">
-                    <p class="modal-help">Need <a href="#">help?</a></p>
-                </footer>
+
             </div>
         </div>
+   
     </div>
+
     <script>
+      
         const searchInput = document.getElementById('searchInput');
         const searchButton = document.querySelector('.search-icon');
+        var itemList = document.getElementById('item-list');
+        function check_search(searchValue)
+        {
+            if (searchValue.length == 0)
+            {
+                alert("Vui lòng nhập câu tìm kiếm !")
+                return false;
+            }
+            return true;
+        }
         searchButton.addEventListener('click', function() {
             const searchValue = searchInput.value;
-            console.log(searchValue); 
-            
+            if (check_search(searchValue))
+            {
+                show_table_news();
+                itemList.innerHTML = "";
+                fetch( "http://127.0.0.1:5000/"+"VectorSpaceModel/"+ searchValue)
+                            .then(response => response.json())
+                            .then(data =>
+                            {
+                                    var array = [];
+                                    array = Object.entries(data);
+                                // Tạo các phần tử HTML tương ứng với dữ liệu từ JSON
+                                    for (var i = 0; i < array.length; i++) 
+                                    {
+                                        item = array[i][1];
+                                        // Tạo phần tử <li> mới
+                                        var listItem = document.createElement('li');
+                                        // Thiết lập nội dung cho phần tử <li> từ dữ liệu JSON
+                                        listItem.innerHTML = '<strong>' + item[0] + '</strong>' + '<p>' + item[2] + '</p>' + `<a href= ${item[1]} >Xem bài viết tại đây </a>`;
+                                        // Thêm phần tử <li> vào danh sách
+                                        itemList.appendChild(listItem);
+                                    }
+                                }
+                            )
+                            .catch(error =>
+                            {
+                                var message = document.createElement('strong');
+                                message.innerHTML = "Không có tài liệu liên quan....";
+                                itemList.appendChild(message);
+                                console.error(error);
+                            })
+                                
+                        
+                             
+                                
+                       
+            }   
         });
-        const buyBtns = document.querySelectorAll('.js-buy-stocks')
         const modal = document.querySelector('.js-modal')
         const modalClose = document.querySelector('.js-modal-close')
         const modalcontainer = document.querySelector('.js-modal-container')
-        //Hàm hiển thị mua stocks (thêm clas open vào modal)
-        function showbuystocks() {
+        function show_table_news() {
             modal.classList.add('open')
         }
-
-        //Hàm ẩn mua vé (gỡ class open ra modal)
-        function hidebuystocks() {
+        function hide_table_news() {
             modal.classList.remove('open')
         }
-
-
-        //Lặp lại từng thẻ button và nghe hành vi click
-        for(const buyBtn of buyBtns) {
-            buyBtn.addEventListener('click', showbuystocks)
-        }
         //Nghe hành vi clik vào nút button close
-        modalClose.addEventListener('click', hidebuystocks)
+        modalClose.addEventListener('click', hide_table_news)
 
-        modal.addEventListener('click', hidebuystocks)
+        // modal.addEventListener('click', hide_table_news)
 
         modalcontainer.addEventListener('click', function(event) {
             event.stopPropagation()

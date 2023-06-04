@@ -5,6 +5,7 @@ from nltk.tokenize import word_tokenize , sent_tokenize
 from tqdm import tqdm
 import pandas as pd
 import numpy as np
+import os
 from wordcloud import STOPWORDS
 class BaseVNPreprocessor:
     def __init__(self):
@@ -28,7 +29,7 @@ class BaseVNPreprocessor:
                             u"\ufe0f"  # dingbats
                             u"\u3030"
                             "]+", flags=re.UNICODE)
-        with open('vietnamese-stopword_dashed.txt' , encoding='utf-8') as f:
+        with open(os.path.join("NewsAPI" ,"vietnamese-stopword_dashed.txt") , encoding='utf-8') as f:
                  self.stopwords = f.readlines()
         self.vowel_table = [['a', 'à', 'á', 'ả', 'ã', 'ạ', 'a'],
                     ['ă', 'ằ', 'ắ', 'ẳ', 'ẵ', 'ặ', 'aw'],
@@ -216,8 +217,4 @@ def text_preprocess(document):
     document = preprocessor.remove_stopwords(document)
     # giả sử bộ dữ liệu có từ sai chính tả cần sửa lỗi chính tả
     # bộ ngữ liệu chỉ tập trung vào từ
-    
-
-    
-
     return document
